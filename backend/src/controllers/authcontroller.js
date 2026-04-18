@@ -1,13 +1,13 @@
-
 import User from "../../models/User.js";
-
 import bcrypt from "bcryptjs";
-
+import { generateToken } from "../lib/utils.js";
+import { ENV } from "../lib/env.js";
+import { sendWelcomeEmail } from "../emails/emailHandlers.js";
 export const signup = async (req, res) => {
-  const { fullName, username, password } = req.body;
+  const { fullName, email, password } = req.body;
 
   try {
-    if (!password || !username || !fullName) {
+    if (!password || !email || !fullName) {
       return res.status(400).json({ error: "All fields are required" });
     }
     if (password.length < 6) {
@@ -21,7 +21,7 @@ export const signup = async (req, res) => {
     const user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: "user already exists" });
 
-    const salt = bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
@@ -30,8 +30,8 @@ export const signup = async (req, res) => {
       password: hashedPassword
     });
 
-    if (newuser) {
-      await newUser.save();
+    if (newUser) {
+      const savedUser=await newUser.save();
       generateToken(newUser._id, res);
 
       res.status(201).json({
@@ -40,6 +40,14 @@ export const signup = async (req, res) => {
         email: newUser.email,
         profilePic: newUser.profilePic,
       })
+      
+
+
+      try{
+        await sendWelcomeEmail(savedUser.email,savedUser.fullName,ENV.CLIENT_URL);
+      } catch (error) {
+        console.error("Error sending welcome email", error);
+      }
     }
     else {
       res.status(400).json({ message: "Invalid user data" });
