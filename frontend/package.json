@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "chatify": "file:.."
+    "chatify": "file:..",
+    "react-hot-toast": "^2.6.0"
   }
 }
