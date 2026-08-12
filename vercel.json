@@ -1,0 +1,11 @@
+{
+  "build": {
+    "env": {
+      "VITE_API_URL": "https://chatify-zknw.onrender.com/api",
+      "VITE_BASE_URL": "https://chatify-zknw.onrender.com"
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
