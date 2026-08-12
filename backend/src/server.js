@@ -1,7 +1,7 @@
 import dns from 'node:dns';
 dns.setServers(['8.8.8.8', '1.1.1.1']);
 
-import express from 'express';  
+import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import cors from "cors";
@@ -11,14 +11,13 @@ import messageRoutes from './routes/message.route.js';
 import authRoutes from  './routes/auth.route.js';
 import { connectDB } from './lib/db.js';
 import { ENV } from './lib/env.js';
-
-const app = express();
+import { app, server } from './lib/socket.js';
 const __dirname = path.resolve();
 
 const PORT = ENV.PORT || 3000;
 
 
-app.use(express.json());
+app.use(express.json({ limit: "5mb" }));
 app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
 app.use(cookieParser());
 
@@ -32,7 +31,7 @@ if(ENV.NODE_ENV === 'production') {
   });
 }  
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log('Server is running on port '  + PORT);
   connectDB();    
 });
