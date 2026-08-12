@@ -24,12 +24,10 @@ app.use(cookieParser());
 app.use("/api/auth",  authRoutes);
 app.use("/api/messages", messageRoutes);
 
-if(ENV.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
-  app.get('*', (_, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-  });
-}  
+// API Health check / welcome route
+app.get("/", (_, res) => {
+  res.json({ status: "ok", message: "Chatify API is running" });
+});
 
 server.listen(PORT, () => {
   console.log('Server is running on port '  + PORT);
