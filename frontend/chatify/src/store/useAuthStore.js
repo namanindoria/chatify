@@ -3,7 +3,15 @@ import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
+const getSocketURL = () => {
+  if (import.meta.env.VITE_BASE_URL) {
+    return import.meta.env.VITE_BASE_URL;
+  }
+  const hostname = window.location.hostname;
+  return `http://${hostname}:3000`;
+};
+
+const BASE_URL = getSocketURL();
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -20,6 +28,7 @@ export const useAuthStore = create((set, get) => ({
       get().connectSocket();
     } catch (error) {
       console.log("Error in authCheck:", error);
+      localStorage.removeItem("token");
       set({ authUser: null });
     } finally {
       set({ isCheckingAuth: false });
@@ -30,7 +39,9 @@ export const useAuthStore = create((set, get) => ({
     set({ isSigningUp: true });
     try {
       const res = await axiosInstance.post("/auth/signup", data);
-      set({ authUser: res.data });
+      const { token, ...userData } = res.data;
+      if (token) localStorage.setItem("token", token);
+      set({ authUser: userData });
 
       toast.success("Account created successfully!");
       get().connectSocket();
@@ -45,7 +56,9 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoggingIn: true });
     try {
       const res = await axiosInstance.post("/auth/login", data);
-      set({ authUser: res.data });
+      const { token, ...userData } = res.data;
+      if (token) localStorage.setItem("token", token);
+      set({ authUser: userData });
 
       toast.success("Logged in successfully");
       get().connectSocket();
@@ -59,6 +72,7 @@ export const useAuthStore = create((set, get) => ({
   logout: async () => {
     try {
       await axiosInstance.post("/auth/logout");
+      localStorage.removeItem("token");
       set({ authUser: null });
       toast.success("Logged out successfully");
       get().disconnectSocket();
@@ -83,8 +97,13 @@ export const useAuthStore = create((set, get) => ({
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
 
+    const token = localStorage.getItem("token");
+
     const socket = io(BASE_URL, {
       withCredentials: true, // this ensures cookies are sent with the connection
+      auth: {
+        token: token,
+      },
     });
 
     socket.connect();
