@@ -15,9 +15,22 @@ const allowedOrigins = [
 const devOrigins = ["http://localhost:5173", "http://localhost:3000"];
 const corsOrigins = [...new Set([...allowedOrigins, ...devOrigins])];
 
+const checkCorsOrigin = (origin, callback) => {
+  if (!origin) return callback(null, true);
+  const isAllowed = corsOrigins.includes(origin) ||
+    /^http:\/\/localhost(:\d+)?$/.test(origin) ||
+    /^http:\/\/127\.0\.0\.1(:\d+)?$/.test(origin) ||
+    /^http:\/\/(192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+)(:\d+)?$/.test(origin);
+  if (isAllowed) {
+    callback(null, true);
+  } else {
+    callback(new Error("Not allowed by CORS"));
+  }
+};
+
 const io = new Server(server, {
   cors: {
-    origin: corsOrigins,
+    origin: checkCorsOrigin,
     credentials: true,
   },
 });
