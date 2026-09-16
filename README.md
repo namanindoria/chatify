@@ -1,4 +1,4 @@
-# 💬 Chatify — Real-Time Full-Stack Chat Application
+# 💬 Chatify — Next-Gen Real-Time Messaging Platform
 
 <div align="center">
 
@@ -8,9 +8,11 @@
 [![Backend API](https://img.shields.io/badge/API_Status-Render-46E3B7?style=for-the-badge&logo=render)](https://chatify-zknw.onrender.com)
 [![License](https://img.shields.io/badge/License-ISC-blue.svg?style=for-the-badge)](LICENSE)
 
-**A modern, full-stack, real-time chat application with audio typing feedback, secure authentication, media sharing, and enterprise-grade security.**
+### 🚀 Connect instantly. Chat effortlessly. Built for speed and style.
 
-[Live Demo](https://chatify-lovat-five.vercel.app) • [API Endpoint](https://chatify-zknw.onrender.com) • [Report Bug](https://github.com/namanindoria/chatify/issues)
+**Chatify** is a sleek, full-stack real-time messaging application engineered with React 19, Node.js, and Socket.IO. Packed with instant media sharing, live presence indicators, satisfying mechanical typing sound effects, and shielded by enterprise-grade Arcjet security.
+
+[🌐 Experience Live Demo](https://chatify-lovat-five.vercel.app) • [🔌 Backend API](https://chatify-zknw.onrender.com) • [🐛 Report Bug](https://github.com/namanindoria/chatify/issues)
 
 </div>
 
@@ -18,20 +20,20 @@
 
 ## 🌟 Key Features
 
-- **⚡ Real-Time Messaging**: Instant two-way communication powered by Socket.IO with zero polling lag.
-- **🟢 Live Online Status**: Real-time broadcast showing which contacts are currently active and online.
-- **🖼️ Image & Media Sharing**: Upload and send images directly in chats via Cloudinary integration.
-- **🔊 Interactive Sound FX**: Tactile typing audio feedback (custom keystroke sounds) and message chime notifications.
+- **⚡ Real-Time Messaging**: Instant two-way communication powered by Socket.IO with zero polling latency.
+- **🟢 Live Online Presence**: Instant status badges showing which friends and contacts are currently active.
+- **🖼️ Rich Media Sharing**: Seamless photo sharing within chats powered by Cloudinary cloud storage.
+- **🔊 Tactile Audio Feedback**: Satisfying mechanical keystroke sound effects as you type, paired with chime notification alerts.
 - **🛡️ Enterprise Security with Arcjet**:
-  - **Attack Shield**: Automatic protection against common web attacks and SQL/NoSQL injections.
-  - **Bot Detection**: Filters malicious automated traffic while allowing safe search engine crawlers.
-  - **Rate Limiting**: Sliding window rate limiting (100 req/min) to prevent DDoS and spam.
-- **🔐 Robust Authentication**:
-  - Secure JSON Web Tokens (JWT) stored in HTTP-only cross-site cookies with header fallback.
-  - Password hashing via Bcrypt with automated salt generation.
-- **📧 Automated Welcome Emails**: Professional onboarding emails sent to newly registered users via Resend API.
-- **🎨 Futuristic UI/UX**: Built with Tailwind CSS and DaisyUI featuring modern glassmorphism, animated borders, and dark glow effects.
-- **📱 Responsive Design**: Seamlessly adapts across desktop, tablet, and mobile screens.
+  - **Attack Shield**: Proactive defense against SQL/NoSQL injections and cross-site scripting attacks.
+  - **Bot Detection**: Automated bot filtering while keeping public routes accessible.
+  - **Rate Limiting**: Sliding window rate limiting (100 requests/min) to eliminate spam and abuse.
+- **🔐 Secure Authentication**:
+  - JWT tokens stored in HTTP-only, secure cross-site cookies with header fallback.
+  - Salted and hashed passwords with Bcrypt.
+- **📧 Automated Welcome Emails**: Instant branded onboarding emails sent to newly registered users via Resend.
+- **🎨 Futuristic Cyber-Dark UI**: Glassmorphism aesthetic, subtle glowing gradients, and responsive layouts built with Tailwind CSS & DaisyUI.
+- **📱 Fully Responsive**: Fluid experience across mobile, tablet, and desktop screens.
 
 ---
 
